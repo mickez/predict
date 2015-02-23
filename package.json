@@ -1,0 +1,16 @@
+{
+  "name": "predict",
+  "version": "1.0.0",
+  "description": "A simple prediction algorithm that relies on conditional probability",
+  "main": "index.html",
+  "dependencies": {
+    "lodash": "^3.3.0",
+    "mongoose": "^3.8.23"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rehn.michael@outlook.com",
+  "license": "MIT"
+}

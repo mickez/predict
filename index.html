@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+
+    input {
+        width: 100%;
+    }
+
+    </style>
+
+</head>
+<body>
+    <input type="text" id="input">
+    <p id="predictText"></p>
+</body>
+
+    <script>
+    (function() {
+        'use strict';
+
+        var predict = require('./predict.js');
+        var input = document.querySelector('#input');
+        var predictText = document.querySelector('#predictText');
+
+        input.addEventListener('input', function(event) {
+            var value = event.target.value;
+            var words = value.normalize().toLowerCase().split(/\s+/g);
+            
+            if (words.length === 0) { return; }
+
+            var current = words[words.length - 1];
+
+            var before = words.length > 1 ? words[words.length - 2] : undefined;
+
+            predict(current, before, function(result) {
+                predictText.innerHTML = result ? result.value : '';
+            });
+
+        });
+    })();
+    </script>
+
+</html>
