@@ -31,7 +31,7 @@ function calculateRealProb(word) {
 }
 
 function processData() {
-    data = data.data.normalize().toLowerCase().split(/\s+/g);
+    data = data.data.replace(/\W/g, ' ').normalize().toLowerCase().split(/\s+/g);
     var words = {};
 
     for (var i = 0; i < data.length; i++) {
@@ -78,8 +78,9 @@ function predict(current, before, cb) {
     if (before) {
         Word
             .where({'value': {'$regex': '^' + current }, 'given.value': before})
-            .sort({'given.realProb.before': -1})
-            .findOne(function(err, result) {
+            .limit(15)
+            .sort({'given.realProb': -1})
+            .find(function(err, result) {
                 if (err) { return console.error(err); }
 
                 cb(result);
@@ -87,8 +88,9 @@ function predict(current, before, cb) {
     } else {
         Word
             .where({'value': {'$regex': '^' + current}})
+            .limit(15)
             .sort({'prob': -1})
-            .findOne(function(err, result) {
+            .find(function(err, result) {
                 if (err) { return console.error(err); }
 
                 cb(result);
