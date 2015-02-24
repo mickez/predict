@@ -31,7 +31,7 @@ function calculateRealProb(word) {
 }
 
 function processData() {
-    data = data.data.replace(/\W/g, ' ').normalize().toLowerCase().split(/\s+/g);
+    data = data.data.normalize().toLowerCase().split(/\s+/g);
     var words = {};
 
     for (var i = 0; i < data.length; i++) {
