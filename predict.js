@@ -98,6 +98,28 @@ function predict(current, before, cb) {
     }
 }
 
+function popularPairs(cb) {
+
+    Word.find(function(err, words) {
+        var wordPairs = [];
+        _.forEach(words, function(word) {
+            _.forEach(word.given, function(given) {
+                wordPairs.push({
+                    value: given.value + ' ' + word.value,
+                    prob: given.realProb
+                });
+            });
+        });
+
+        wordPairs = _.sortBy(wordPairs, function(pair) {
+            return 1 / pair.prob;
+        });
+
+        cb(wordPairs);
+    });
+
+}
+
 Word.remove({}, function(err) {
     if (err) { console.error(err); }
 
@@ -106,3 +128,4 @@ Word.remove({}, function(err) {
 });
 
 module.exports = predict;
+module.exports.popularPairs = popularPairs;

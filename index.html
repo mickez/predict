@@ -10,10 +10,21 @@
         width: 100%;
     }
 
+    #popularPairsText {
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+
     </style>
 
 </head>
 <body>
+    <button id="popularPairsButton">
+        Generate popular pairs
+    </button>
+    <p id="popularPairsText">
+        
+    </p>
     <input type="text" id="input">
     <p id="predictText"></p>
 </body>
@@ -25,6 +36,17 @@
         var predict = require('./predict.js');
         var input = document.querySelector('#input');
         var predictText = document.querySelector('#predictText');
+        var popularPairsButton = document.querySelector('#popularPairsButton');
+        var popularPairsText = document.querySelector('#popularPairsText');
+
+        popularPairsButton.addEventListener('click', function() {
+            predict.popularPairs(function(pairs) {
+                console.log(pairs);
+                popularPairsText.innerHTML = pairs.map(function(pair) {
+                    return pair.prob.toFixed(6) + ' : ' + pair.value;
+                }).join('<br>');
+            });
+        });
 
         input.addEventListener('input', function(event) {
             var value = event.target.value;
